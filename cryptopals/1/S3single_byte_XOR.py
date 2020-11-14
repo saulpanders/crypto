@@ -18,17 +18,16 @@ occurance_english = {
     'y': 1.9913847,    'z': 0.0746517
 }
 
-# in: string (hexidecimal); out: dict with {byte: decrypt_attempt}
-def brute_single_byte_XOR(hex_string):
-	hex_bytes = bytes.fromhex(hex_string)
+# in: byte string; out: dict with {byte: decrypt_attempt}
+def brute_single_byte_XOR(ciphertext):
 	brute_results = {}
 	for i in range(256):
-		brute_results[i] = bytes([x ^ i for x in hex_bytes])
+		brute_results[i] = bytes([x ^ i for x in ciphertext])
 	return brute_results
 
 
 #note: a low fitness score means closer to english
-# in: out: dict with {byte: decrypt_attempt}; out: dict with {byte: (decrypt_attempt,fitness_score)}
+# in: dict of brute analysis results with {byte: decrypt_attempt}; out: dict with {byte: (decrypt_attempt,fitness_score)}
 def compute_fitness_quotient(brute_results):
 	dist_english = list(occurance_english.values())
 	for key in brute_results:
@@ -38,20 +37,20 @@ def compute_fitness_quotient(brute_results):
 		brute_results[key] = (brute_results[key], fitness)
 	return brute_results
 
-def decipher(hex_string):
-	xor_brute_matrix  = compute_fitness_quotient(brute_single_byte_XOR(hex_string))
+#in : ciphertext byte string ; out list of tuples (key, decrypted bytes tring)
+def decipher_single_XOR(ciphertext):
+	xor_brute_matrix  = compute_fitness_quotient(brute_single_byte_XOR(ciphertext))
 	sorted_by_fitness = sorted(xor_brute_matrix.items(), key=lambda tup: tup[1][1])
-	print("Top 5 results (english)")
-	for i in range(5):
-		print(i+1, ": ",sorted_by_fitness[i])
+	return sorted_by_fitness[:5]
 
 
-def test():
-	print(1)
-
+#note: decode hex strings in main so all functions accept byte strings
 def main():
 	ciphertext = "1b37373331363f78151b7f2b783431333d78397828372d363c78373e783a393b3736"
-	decipher(ciphertext)
+	decrypt_attempts = decipher_single_XOR(bytes.fromhex(ciphertext))
+	print("Top 5 results (english)")
+	for i in range(5):
+		print(i+1, ": ",decrypt_attempts[i])
 
 
 if __name__ == "__main__":

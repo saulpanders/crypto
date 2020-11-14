@@ -7,9 +7,9 @@
 #	output: 746865206b696420646f6e277420706c6179
 
 # in: string (hex), string(hex) ; out: string (hex)
-def fixed_size_XOR(buffer_1, buffer_2):
-	b1_bytes = bytes.fromhex(buffer_1) 
-	b2_bytes = bytes.fromhex(buffer_2)
+def fixed_size_XOR(b1, b2):
+	b1_bytes = bytes.fromhex(b1) 
+	b2_bytes = bytes.fromhex(b2)
 	xor_result = bytes([x ^ y for x,y in zip(b1_bytes, b2_bytes)])
 	return bytes.hex(xor_result)
 

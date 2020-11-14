@@ -8,10 +8,13 @@
 import base64
 from Crypto.Cipher import AES
 
-#in: string (filename) ; out: string (decoded bytes)
+
+
 def file_in(filename):
 	with open(filename) as f:
 		return base64.b64decode(f.read())
+
+
 
 #in: byte array (decoded bytes), bytearray (key) ; out: bytearray (decrypted) 
 def decrypt_AES_ECB(byte_stream, key):
