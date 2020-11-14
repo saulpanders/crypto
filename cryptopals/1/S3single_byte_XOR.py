@@ -45,5 +45,14 @@ def decipher(hex_string):
 	for i in range(5):
 		print(i+1, ": ",sorted_by_fitness[i])
 
-ciphertext = "1b37373331363f78151b7f2b783431333d78397828372d363c78373e783a393b3736"
-decipher(ciphertext)
+
+def test():
+	print(1)
+
+def main():
+	ciphertext = "1b37373331363f78151b7f2b783431333d78397828372d363c78373e783a393b3736"
+	decipher(ciphertext)
+
+
+if __name__ == "__main__":
+	main()

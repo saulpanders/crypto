@@ -105,18 +105,23 @@ def decrypt_multi_byte_XOR(plain,key):
 	return bytes([ x ^ key[ i% len(key)] for i,x in enumerate(plain)])
 
 
+def break_multi_byte_XOR(data, max_key_length):
+	keys = guess_key_size(data, max_key_length)
+	key_sizes = [k[0] for k in keys[:5]]
+	top_results = []
+	for key_size in key_sizes:
+		blocked_decoded_bytes = break_into_blocks(data,key_size)
+		transposed_bytes = transpose_blocks(blocked_decoded_bytes)
+		key =retrieve_key(transposed_bytes)
+		plaintext = decrypt_multi_byte_XOR(data, key)
+		top_results.append((key, plaintext))
+	return top_results
+
+
 def main():
 	filename = "challenge6.txt"
 	decoded_bytes = file_in(filename)
-	keys = guess_key_size(decoded_bytes, 40)
-	key_sizes = [k[0] for k in keys[:5]]
-	for key_size in key_sizes:
-		blocked_decoded_bytes = break_into_blocks(decoded_bytes,key_size)
-		transposed_bytes = transpose_blocks(blocked_decoded_bytes)
-		key =retrieve_key(transposed_bytes)
-		plaintext = decrypt_multi_byte_XOR(decoded_bytes, key)
-		print(key)
-		print(plaintext)
+	l = break_multi_byte_XOR(decoded_bytes, 40)
 
 
 

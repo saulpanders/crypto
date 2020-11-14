@@ -7,7 +7,7 @@
 #
 
 from collections import Counter
-
+from S3single_byte_XOR.py import test
 
 occurance_english = {
     'a': 8.2389258,    'b': 1.5051398,    'c': 2.8065007,    'd': 4.2904556,
@@ -55,6 +55,7 @@ def file_in(filename):
 def main():
 	filename = "challenge4.txt"
 	file_in(filename)
+	test()
 
 
 

@@ -1,6 +1,0 @@
-# Challenge 8:
-# 	AES in ECB mode
-#	
-#	in challenge8.txt are a bunch of hex-encoded ciphertexts.
-#
-#	One of them has been encrypted with ECB. Detect it

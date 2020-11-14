@@ -14,5 +14,10 @@ def hex_to_bs4(hex_string):
 	base64_bytes = base64.b64encode(hex_bytes) 
 	return base64_bytes
 
-test = "49276d206b696c6c696e6720796f757220627261696e206c696b65206120706f69736f6e6f7573206d757368726f6f6d" 
-print(hex_to_bs4(test))
+main():
+	test = "49276d206b696c6c696e6720796f757220627261696e206c696b65206120706f69736f6e6f7573206d757368726f6f6d" 
+	print(hex_to_bs4(test))
+
+
+if __name__ == "__main__":
+	main()
