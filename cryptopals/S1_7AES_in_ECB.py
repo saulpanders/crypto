@@ -9,7 +9,6 @@ import base64
 from Crypto.Cipher import AES
 
 
-
 def file_in(filename):
 	with open(filename) as f:
 		return base64.b64decode(f.read())
@@ -19,7 +18,7 @@ def file_in(filename):
 #in: byte array (decoded bytes), bytearray (key) ; out: bytearray (decrypted) 
 def decrypt_AES_ECB(byte_stream, key):
 	 cipher = AES.new(key, AES.MODE_ECB)
-	 return cipher.decrypt(byte_stream)
+	 return cipher.decrypt(byte_stream) 
 
 def main():
 	filename = "challenge7.txt"
