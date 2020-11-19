@@ -6,7 +6,7 @@
 #
 
 def pkcs7_pad_block(block, pad_length):
-	if(len(block) == pad_length):
+	if(check_pcks7_pad(block)):
 		return block
 	if(len(block) > pad_length):
 		raise Exception("Error, pad size less than overall block length")

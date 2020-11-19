@@ -4,10 +4,10 @@
 # One of the 60-character strings in challenge4.txt has been encrypted by single-character XOR. 
 # Find it
 #
-#
+#TODO refactor for modularity
 
 from collections import Counter
-from S3single_byte_XOR import brute_single_byte_XOR, compute_fitness_quotient, decipher_single_XOR
+from S1_3single_byte_XOR import brute_single_byte_XOR, compute_fitness_quotient, decipher_single_XOR
 
 
 # in: string (name of ciphertext); out: tuple (best line match)

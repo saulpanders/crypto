@@ -7,13 +7,11 @@
 #	decrypt using code
 import base64
 from Crypto.Cipher import AES
+from utils import decode_base64_file
 
-
-def file_in(filename):
-	with open(filename) as f:
-		return base64.b64decode(f.read())
-
-
+def encrypt_AES_ECB(byte_stream, key):
+	 cipher = AES.new(key, AES.MODE_ECB)
+	 return cipher.encrypt(byte_stream) 
 
 #in: byte array (decoded bytes), bytearray (key) ; out: bytearray (decrypted) 
 def decrypt_AES_ECB(byte_stream, key):
@@ -23,8 +21,10 @@ def decrypt_AES_ECB(byte_stream, key):
 def main():
 	filename = "challenge7.txt"
 	key = b'YELLOW SUBMARINE'
-	decoded_bytes = file_in(filename)
+	decoded_bytes = decode_base64_file(filename)
 	decrypted_bytes = decrypt_AES_ECB(decoded_bytes, key)
+	if (decoded_bytes == encrypt_AES_ECB(decrypted_bytes, key)):
+		print("yee")
 	print(decrypted_bytes)
 
 

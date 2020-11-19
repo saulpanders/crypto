@@ -3,7 +3,7 @@
 #in: string (filename) ; out: string (decoded bytes)
 import base64 
 
-def file_in(filename):
+def decode_base64_file(filename):
 	with open(filename) as f:
 		return base64.b64decode(f.read())
 

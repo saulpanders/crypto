@@ -3,8 +3,9 @@
 #		THIS WORKS BUT IS SUPER UGLY AND COULD USE REFACTORING
 
 from collections import Counter
-from S5repeating_key_XOR import multi_byte_XOR
-from S3single_byte_XOR import decipher_single_XOR
+from S1_5repeating_key_XOR import multi_byte_key_XOR
+from S1_3single_byte_XOR import decipher_single_XOR
+from utils import decode_base64_file
 import base64
 import itertools
 
@@ -16,11 +17,6 @@ def retrieve_key(ciphertext):
 	key = [get_best_key_byte(block)[0] for block in ciphertext]
 	return bytes(key)
 
-#TODO refactor for utils
-#in: string (filename) ; out: string (decoded bytes)
-def file_in(filename):
-	with open(filename) as f:
-		return base64.b64decode(f.read())
 
 #in: byte string, byte string; out: int (hamming distance -> 0 == strings are the same)
 def hamming_distance(x,y):
@@ -78,14 +74,14 @@ def break_multi_byte_XOR(data, max_key_length):
 		blocked_decoded_bytes = break_into_blocks(data,key_size)
 		transposed_bytes = transpose_blocks(blocked_decoded_bytes)
 		key =retrieve_key(transposed_bytes)
-		plaintext = multi_byte_XOR(data, key)
+		plaintext = multi_byte_key_XOR(data, key)
 		top_results.append((key, plaintext))
 	return top_results
 
 
 def main():
 	filename = "challenge6.txt"
-	decoded_bytes = file_in(filename)
+	decoded_bytes = decode_base64_file(filename)
 	multi_xor_analysis = break_multi_byte_XOR(decoded_bytes, 40)
 	print(multi_xor_analysis)
 
