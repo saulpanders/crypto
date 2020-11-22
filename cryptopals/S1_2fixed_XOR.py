@@ -8,8 +8,8 @@
 
 # in: string (hex), string(hex) ; out: string (hex)
 def fixed_size_XOR(b1, b2):
-	if (len(b1) != len(b2)):
-		raise
+	#if (len(b1) != len(b2)):
+	#	raise
 	xor = bytes([x ^ y for x,y in zip(b1, b2)])
 	return xor
 

@@ -8,17 +8,18 @@
 from Crypto.Cipher import AES
 from S1_2fixed_XOR import fixed_size_XOR
 from S1_7AES_in_ECB import encrypt_AES_ECB, decrypt_AES_ECB
+from S2_9pkcs7_pad import pkcs7_pad_block, pkcs7_unpad_block, check_pkcs7_pad
 from utils import decode_base64_file
 
 def encrypt_AES_CBC(data, key, iv):
 	cipher = b""
 	prev_block = iv
 	for i in range(0,len(data), AES.block_size):
-		cur_block = data[i: i + AES.block_size]
+		cur_block = pkcs7_pad_block(data[i: i + AES.block_size], AES.block_size)
 		xor_result = fixed_size_XOR(cur_block, prev_block)
 		encrypt_block = encrypt_AES_ECB(xor_result, key)
-		prev_block = encrypt_block
 		cipher += encrypt_block
+		prev_block = encrypt_block
 
 	return cipher
 
@@ -31,6 +32,7 @@ def decrypt_AES_CBC(data, key, iv):
 		xor_result = fixed_size_XOR(decypt_block, prev_block)
 		prev_block = cur_block
 		plain +=xor_result
+	plain = pkcs7_unpad_block(plain)
 	return plain
 
 
@@ -46,6 +48,8 @@ def main():
 	print(plain)
 	print(cipher)
 	print(plain_2)
+	custom_input = b'Trying to decrypt something else to see if it works.'
+	print(decrypt_AES_CBC(encrypt_AES_CBC(custom_input, key, iv), key, iv) == custom_input)
 
 
 if __name__ == "__main__":

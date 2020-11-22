@@ -8,15 +8,16 @@
 import base64
 from Crypto.Cipher import AES
 from utils import decode_base64_file
+from S2_9pkcs7_pad import *
 
 def encrypt_AES_ECB(byte_stream, key):
 	 cipher = AES.new(key, AES.MODE_ECB)
-	 return cipher.encrypt(byte_stream) 
+	 return cipher.encrypt(pkcs7_pad_block(byte_stream, AES.block_size)) 
 
 #in: byte array (decoded bytes), bytearray (key) ; out: bytearray (decrypted) 
 def decrypt_AES_ECB(byte_stream, key):
 	 cipher = AES.new(key, AES.MODE_ECB)
-	 return cipher.decrypt(byte_stream) 
+	 return pkcs7_unpad_block(cipher.decrypt(byte_stream))
 
 def main():
 	filename = "challenge7.txt"

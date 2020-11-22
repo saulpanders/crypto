@@ -23,7 +23,7 @@ def detect_block_match(block_summary):
 
 # in: ciphertext string ; out: AES_ECB cipher string + block analysis || False
 def detect_AES_ECB(ciphertext):
-	line_block_analysis = calculate_block_freq(bytes.fromhex(ciphertext))
+	line_block_analysis = calculate_block_freq(ciphertext)
 	num_block_matches = detect_block_match(line_block_analysis)
 	if(num_block_matches > 0):
 		return (ciphertext, line_block_analysis)
@@ -35,6 +35,7 @@ def main():
 	filename = "challenge8.txt"
 	with open(filename) as f:
 		for line in f:
+			byte_str = bytes.fromhex(line)
 			if(detect_AES_ECB(line)):
 				print(detect_AES_ECB(line))
 

@@ -10,7 +10,7 @@ def decode_base64_file(filename):
 
 
 def main():
-	print(file_in("1\\challenge6.txt"))
+	print(decode_base64_file("1\\challenge6.txt"))
 
 if __name__ == "__main__":
 	main()
